@@ -11,11 +11,17 @@ namespace EScoreConsole.Services;
 public class ChatGpt : IChatGpt, IExternalApi
 {
     private readonly OpenAIAPI _client;
+    private readonly IConfiguration _configuration;
+
+    private readonly string? Key; 
     
-    public ChatGpt(string key)
+    public ChatGpt(IConfiguration configuration)
     {
-        APIAuthentication apiAuthentication = new APIAuthentication(key);
+        _configuration = configuration;
+        APIAuthentication apiAuthentication = new APIAuthentication(Key);
         _client = new OpenAIAPI(apiAuthentication);
+
+        Key = configuration["AppSettings:GptKey"];
     }
     
     public async Task<string> Request(CompletionRequest completionRequest)
@@ -31,7 +37,7 @@ public class ChatGpt : IChatGpt, IExternalApi
 
     public Task<string> Request(string request)
     {
-        return Request(new CompletionRequest { Model = "gpt-3.5-turbo", MaxTokens = 150, Prompt = request });
+        return Request(new CompletionRequest { Model = "gpt-3.5-turbo-instruct", MaxTokens = 150, Prompt = request });
     }
 
     public Task<string> SwotToCsf(SwotComponent request)

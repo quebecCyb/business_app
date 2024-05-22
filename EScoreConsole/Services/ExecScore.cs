@@ -8,8 +8,8 @@ namespace EScoreConsole.Services;
 public class ExecScore : IExecScore
 {
     private Swot Swot { get; set; } = new();
-    private readonly List<CriticalSuccessFactor> _csf = new();
-    private readonly Dictionary<SwotType, StrategyObjective> _strategy = new();
+    public List<CriticalSuccessFactor> Csf { get; } = new();
+    public Dictionary<SwotType, StrategyObjective> Strategy { get; } = new();
     private readonly IAiClient _aiClient;
     
     public string Mission { get; set; } 
@@ -21,14 +21,12 @@ public class ExecScore : IExecScore
         _aiClient = aiClient;
     }
     
-    
-    
     public async Task SwotToCsf()
     {
         for (int i = 0; i < Swot.Components.Count; i++)
         {
             var content = await _aiClient.SwotToCsf(Swot.Components[i]);
-            _csf.Add(new CriticalSuccessFactor(i, content));
+            Csf.Add(new CriticalSuccessFactor(i, content));
         }
     }
     
@@ -36,7 +34,7 @@ public class ExecScore : IExecScore
     {
         foreach (SwotType type in Enum.GetValues(typeof(SwotType)))
         {
-            _strategy[type] = new StrategyObjective(await _aiClient.SwotToStrategy(Swot, type), type);
+            Strategy[type] = new StrategyObjective(await _aiClient.SwotToStrategy(Swot, type), type);
         }
     }
 
