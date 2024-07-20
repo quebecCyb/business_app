@@ -18,10 +18,11 @@ builder.Services.AddScoped<IExecScore, ExecScore>();
 
 builder.Services.AddCors(options =>
 {
-    options.AddPolicy("AllowAll",
-        builder =>
+    
+    options.AddPolicy("AllowSpecificOrigins",
+        policyBuilder =>
         {
-            builder.AllowAnyOrigin()
+            policyBuilder.WithOrigins("http://162.19.233.237:4041")
                 .AllowAnyMethod()
                 .AllowAnyHeader();
         });
@@ -29,7 +30,7 @@ builder.Services.AddCors(options =>
 
 var app = builder.Build();
 
-app.UseCors("AllowAll");
+app.UseCors("AllowSpecificOrigins");
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
@@ -52,6 +53,6 @@ app.UseEndpoints(endpoints =>
 });
 
 
-app.UseCors("AllowAllOrigins");
+// app.UseCors("AllowAllOrigins");
 
 app.Run();
