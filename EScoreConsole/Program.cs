@@ -52,9 +52,15 @@ app.UseEndpoints(endpoints =>
 });
 
 app.UseCors(builder =>
-    builder.WithOrigins("http://162.19.233.237:4050")
-        .AllowAnyHeader()
-        .AllowAnyMethod());
+    {
+        builder.WithOrigins("http://162.19.233.237:4050")
+            .AllowAnyHeader()
+            .AllowAnyMethod();
+        builder.WithOrigins("http://162.19.233.237:4041")
+            .AllowAnyHeader()
+            .AllowAnyMethod();
+    }
+    );
 
 
 app.Run();
