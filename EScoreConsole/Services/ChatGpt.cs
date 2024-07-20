@@ -13,15 +13,14 @@ public class ChatGpt : IChatGpt, IExternalApi
     private readonly OpenAIAPI _client;
     private readonly IConfiguration _configuration;
 
-    private readonly string? Key; 
-    
     public ChatGpt(IConfiguration configuration)
     {
         _configuration = configuration;
-        APIAuthentication apiAuthentication = new APIAuthentication(Key);
+        var key = configuration["AppSettings:GptKey"];
+
+        APIAuthentication apiAuthentication = new APIAuthentication(key);
         _client = new OpenAIAPI(apiAuthentication);
 
-        Key = configuration["AppSettings:GptKey"];
     }
     
     public async Task<string> Request(CompletionRequest completionRequest)
