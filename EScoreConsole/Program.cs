@@ -3,7 +3,7 @@ using EScoreConsole.Services.Interfaces;
 
 var builder = WebApplication.CreateBuilder(args);
 
-builder.WebHost.UseUrls("http://localhost:4040");
+builder.WebHost.UseUrls("http://162.19.233.237:4040");
 
 // Add services to the container.
 builder.Services.AddControllers();
