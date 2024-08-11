@@ -13,4 +13,5 @@ public interface IAiClient
 
     public Task<string> SwotToMission(Swot swot);
     public Task<string> SwotToVision(Swot swot);
+    public Task<string> CsfToChart(Swot swot, string csf);
 }

@@ -84,6 +84,36 @@ namespace EScoreConsole.Controllers
             return Ok(_execScore.Mission);
         }
         
+        
+        [HttpPost("chart")]
+        public async Task<IActionResult> Chart([FromBody] ChartPostDto data)
+        {
+            foreach (var s in data.Strength.Split(";"))
+            {
+                _execScore.AddSwotComponent(SwotType.Strength, s);
+            }
+            
+            foreach (var s in data.Weakness.Split(";"))
+            {
+                _execScore.AddSwotComponent(SwotType.Weakness, s);
+            }
+            
+            foreach (var s in data.Opportunities.Split(";"))
+            {
+                _execScore.AddSwotComponent(SwotType.Opportunity, s);
+            }
+            
+            foreach (var s in data.Threats.Split(";"))
+            {
+                _execScore.AddSwotComponent(SwotType.Threat, s);
+            }
+            
+            ;
+
+            return Ok(await _execScore.CsfToChart(data.Csf));
+        }
+
+        
         [HttpPost("vision")]
         public async Task<IActionResult> Vision([FromBody] SwotPostDto data)
         {

@@ -11,6 +11,7 @@ public interface IExecScore
     string Vision { get; set; } 
 
     Task SwotToCsf();
+    Task<string> CsfToChart(string csf);
     Task SwotToVision();
     Task SwotToMission();
     Task SwotToStrategy();

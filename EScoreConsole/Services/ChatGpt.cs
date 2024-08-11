@@ -41,23 +41,65 @@ public class ChatGpt : IChatGpt, IExternalApi
 
     public Task<string> SwotToCsf(SwotComponent request)
     {
-        return Request($"You should map this SWOT component '{request.Content}' to corresponding critical success factor");
+        return Request($"You should map this SWOT component  ###{request.Content}### of this type '''{request.Type}''' WHERE 'Strength = 0,   Weakness = 1,   Opportunity = 2,    Threat = 3' to corresponding critical success factor. Make critical success factor in one or two sentences MAXIMUM.");
     }
 
     public Task<string> SwotToStrategy(Swot swot, SwotType type)
     {
         IEnumerable<SwotComponent> components = swot.Components.FindAll( e => e.Type == type);
         
-        return Request($"You should map this SWOT components '{string.Join("; ", components)}' of type {type} to corresponding strategy objectives");
+        return Request($"You should map this SWOT components '{string.Join("; ", components)}' of type {type} to corresponding strategy objectives. VERY SHORT. Try to use not more 100 words to describe main objectives briefly.");
     }
 
     public Task<string> SwotToMission(Swot swot)
     {
-        return Request($"You should map this SWOT components '{string.Join("; ", swot.Components)}' to corresponding company`s mission statement");
+        return Request($"You should map this SWOT components '{string.Join("; ", swot.Components)}' to corresponding company`s mission statement. VERY SHORT. Try to use not more 100 words to describe main missions briefly.");
     }
 
     public Task<string> SwotToVision(Swot swot)
     {
-        return Request($"You should map this SWOT components '{string.Join("; ", swot.Components)}' to corresponding company`s future vision");
+        return Request($"You should map this SWOT components '{string.Join("; ", swot.Components)}' to corresponding company`s future vision.");
     }
+
+    public Task<string> CsfToChart(Swot swot, string csf)
+    {
+        return Request($"""
+                        You should estimate (from 0 to 5) corresponding company`s key performance indicators (from list below) using this SWOT components '{string.Join("; ", swot.Components)}' AND this critical success factors: '{csf}'. This KPI:
+                        
+                        Steering Processes:
+                        
+                        ROP Quality - SSL
+                        ROP Quality - VLU
+                        Quality conformity
+                        Vacancies
+                        HSE frequency
+                        Delivery Processes:
+                        
+                        Schedule Performance Index
+                        Strategic Float - Signalling
+                        Strategic Float - Trains
+                        Critical Path Analysis
+                        Design Register
+                        Financial Results:
+                        
+                        Cash Received - VLU
+                        Cash Received - SSL
+                        NOPAT evolution - LUPD
+                        E-A-C Gross Margin evolution - VLU
+                        E-A-C Gross Margin evolution - SSL
+                        E-A-C Risk & Contingency - VLU
+                        E-A-C Risk & Contingency - SSL
+                        JTC - VLU
+                        Customer Satisfaction:
+                        
+                        Ambience - VLU
+                        Availability (LCH) - VLU
+                        Customer Responsiveness
+                        Customer Satisfaction - VLU
+                        Customer Satisfaction - SSL
+                        
+                        """);
+        
+    }
+
 }

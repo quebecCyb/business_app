@@ -29,6 +29,12 @@ public class ExecScore : IExecScore
             Csf.Add(new CriticalSuccessFactor(i, content));
         }
     }
+
+    public async Task<string> CsfToChart(string csf)
+    {
+        var content = await _aiClient.CsfToChart(Swot, csf);
+        return content;
+    }
     
     public async Task SwotToStrategy()
     {
