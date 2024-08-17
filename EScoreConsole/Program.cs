@@ -25,6 +25,10 @@ builder.Services.AddCors(options =>
             policyBuilder.WithOrigins("http://162.19.233.237:4041")
                 .AllowAnyMethod()
                 .AllowAnyHeader();
+            
+            policyBuilder.WithOrigins("https://exec.fordka.info")
+                .AllowAnyMethod()
+                .AllowAnyHeader();
         });
 });
 
