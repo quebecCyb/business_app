@@ -48,7 +48,7 @@ public class ChatGpt : IChatGpt, IExternalApi
     {
         IEnumerable<SwotComponent> components = swot.Components.FindAll( e => e.Type == type);
         
-        return Request($"You should map this SWOT components '{string.Join("; ", components)}' of type {type} to corresponding strategy objectives. VERY SHORT. Try to use not more 100 words to describe main objectives briefly.");
+        return Request($"You should map this SWOT components '{string.Join("; ", components)}' of type {type} to corresponding strategy objective. VERY SHORT. Try to use not more 50 words to describe main objectives briefly.");
     }
 
     public Task<string> SwotToMission(Swot swot)
